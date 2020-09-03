@@ -4,6 +4,32 @@
     https://api.github.com/users/<your name>
 */
 
+import axios from 'axios'
+const myGH = axios.get('https://api.github.com/users/rhea-manuel')
+  .then(response => {
+    
+
+    const data = response.data
+
+    console.log(data)
+    // const imgUrl = data.avatar_url
+    // const username = data.login
+    
+    const newCard = githubCardMaker(data)
+    
+    const parentDiv = document.querySelector('.cards')
+    // debugger
+    parentDiv.appendChild(newCard)
+
+    return response
+  })
+  .catch(error => {
+    return error
+  })
+
+// console.log(myGH)
+
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -16,6 +42,41 @@
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+
+function githubCardMaker(data){
+  debugger
+  // console.log(imageUrl)
+  const parentPanel = document.createElement('div')
+
+  const img = document.createElement('img')
+  // console.log(imageUrl)
+  img.src = data[avatar_url]
+  // console.log(img.src)
+  parentPanel.appendChild(img)
+
+  const namePanel = document.createElement('h2')
+  namePanel.textContent = data.login
+  parentPanel.appendChild(namePanel)
+
+  return parentPanel
+}
+
+// function githubCardMaker({imageUrl, username}){
+//   // console.log(imageUrl)
+//   const parentPanel = document.createElement('div')
+
+//   const img = document.createElement('img')
+//   // console.log(imageUrl)
+//   img.src = imageUrl
+//   console.log(img.src)
+//   parentPanel.appendChild(img)
+
+//   const namePanel = document.createElement('h2')
+//   namePanel.textContent = username
+//   parentPanel.appendChild(namePanel)
+
+//   return parentPanel
+// }
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
