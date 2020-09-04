@@ -150,6 +150,8 @@ function githubCardMaker(data){
   // console.log(imageUrl)
   const parentPanel = document.createElement('div')
   parentPanel.className = 'card'
+  parentPanel.classList.add('hidden')
+  console.log(parentPanel.className)
 
   const childPanel = document.createElement('div')
   childPanel.className = 'card-info'
@@ -186,16 +188,12 @@ function githubCardMaker(data){
       item = makeElement('p', 'innerHTML', `Profile: <a href="${data.url}">${data.url}</a>`)
       // console.log(item)
     }
-    console.log(item)
+
+    // item.className = 'listItem'
+    // item.classList.add('hidden')
+    // console.log(item)
     childPanel.appendChild(item)
   }
-  // const location = makeElement('p', 'textContent', `Location: ${data.location}`)
-  // name.appendChild(location)
-
-  // const 
-  parentPanel.appendChild(childPanel)
-
-  return parentPanel
 
   function makeElement(type, property, propertyContent, className){
     const curItem = document.createElement(type)
@@ -206,6 +204,29 @@ function githubCardMaker(data){
 
     return curItem
   }
+
+  parentPanel.appendChild(childPanel)
+
+
+  const button = document.createElement('span')
+  button.textContent = "+"
+  button.className = 'button'
+
+  button.addEventListener('click', function(){
+    parentPanel.classList.toggle('hidden')
+
+  })
+
+  // const location = makeElement('p', 'textContent', `Location: ${data.location}`)
+  // name.appendChild(location)
+
+  // const 
+  
+  parentPanel.appendChild(button)
+
+  return parentPanel
+
+  
 
 }
 
