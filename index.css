@@ -123,34 +123,33 @@ body {
   margin: 3px 0 10px;
 }
 
+/* ------------
+STRETCH GOAL: Styles for the open/collapse functionality
+---------------*/
+
+/* When hidden, make the card thinner and hide the overflow */
 .card.hidden{
   height: 45px;
   padding-top:5px;
   justify-content: space-between;
-  /* padding-bottom: 50px; */
-  /* display: block; */
   overflow: hidden;
 }
 
+/* Hide the image */
 .card.hidden img{
   display:none
 }
 
+/* Make the username the same size as the normal name titles (incase the name is missing) in order to be consistent with the rest */
 .card.hidden .username{
   font-size: 3.4rem;
 }
 
+/* Create and align the open/close button to the right of the panel */
 .button{
   font-size:3rem;
   display: inline-block;
   margin-left: auto;
-  /* position: relative; */
-  /* top:0px; */
-  /* right:0px; */
-  /* left:0px;
-  float:right; */
-  /* padding-top:0px; */
-  /* width:50%; */
   text-align:right;
 }
 
