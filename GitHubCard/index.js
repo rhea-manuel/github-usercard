@@ -4,6 +4,22 @@
     https://api.github.com/users/<your name>
 */
 
+import axios from 'axios'
+
+// function makeAllCards(){}
+axios.get('https://api.github.com/users/rhea-manuel')
+  .then(response => {
+    console.log(response.data)
+
+    return response
+  })
+  .catch(error => {
+    return error
+  })
+
+// console.log(myGH)
+
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -12,10 +28,33 @@
     Skip to STEP 3.
 */
 
+
+
 /*
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+
+
+
+
+
+// function githubCardMaker({imageUrl, username}){
+//   // console.log(imageUrl)
+//   const parentPanel = document.createElement('div')
+
+//   const img = document.createElement('img')
+//   // console.log(imageUrl)
+//   img.src = imageUrl
+//   console.log(img.src)
+//   parentPanel.appendChild(img)
+
+//   const namePanel = document.createElement('h2')
+//   namePanel.textContent = username
+//   parentPanel.appendChild(namePanel)
+
+//   return parentPanel
+// }
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -28,7 +67,63 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'dionne-stratton',
+  'joshuaholloway',
+  'leachtucker',
+  'oliviaChen2020',
+  'rhea-manuel',
+  'simonesquad',
+  'sleepylazarus',
+  'sophiethedeveloper',
+]
+
+function makeAllCards(allUsers){
+
+  for (let i = 0 ; i < allUsers.length; i++){
+
+    const link = `https://api.github.com/users/${allUsers[i]}`
+    // console.log(link)
+    axios.get(link)
+    .then(response => {
+  
+  
+      const data = response.data
+  
+      // console.log(data)
+      // const imgUrl = data.avatar_url
+      // const username = data.login
+  
+      const newCard = githubCardMaker(data)
+  
+      const parentDiv = document.querySelector('.cards')
+      // debugger
+      parentDiv.appendChild(newCard)
+      // console.log(response.data)
+  
+      return response
+    })
+    .catch(error => {
+      return error
+    })
+
+  }
+  // const data = response.data
+
+  // console.log(data)
+  // // const imgUrl = data.avatar_url
+  // // const username = data.login
+
+  // const newCard = githubCardMaker(data)
+
+  // const parentDiv = document.querySelector('.cards')
+  // // debugger
+  // parentDiv.appendChild(newCard)
+}
+
+
+
+makeAllCards(followersArray)
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -49,6 +144,70 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function githubCardMaker(data){
+  // debugger
+  // console.log(imageUrl)
+  const parentPanel = document.createElement('div')
+  parentPanel.className = 'card'
+
+  const childPanel = document.createElement('div')
+  childPanel.className = 'card-info'
+
+  
+  // console.log(childPanel)
+
+  const img = makeElement('img', 'src', data.avatar_url)
+  parentPanel.appendChild(img)
+
+  const name = makeElement('h3', 'textContent', data.name, 'name')
+  childPanel.appendChild(name)
+
+  const username = makeElement('p', 'textContent', data.login, 'username')
+  childPanel.appendChild(username)
+
+  const allProperties = ['location', 'profile', 'followers', 'following', 'bio']
+
+  for (let i = 0; i < allProperties.length; i++){
+    // console.log(allProperties[i])
+    let curProp = allProperties[i]
+    const toAdd = data[curProp]
+
+    // Makes curProp uppercase when its injected into the final string
+    curProp = curProp.charAt(0).toUpperCase() + curProp.slice(1)
+
+    let item = 0;
+    // console.log(toAdd)
+    if (i!=1){
+      item = makeElement('p', 'textContent', `${curProp}: ${toAdd}`) 
+    }
+
+    else {
+      item = makeElement('p', 'innerHTML', `Profile: <a href="${data.url}">${data.url}</a>`)
+      // console.log(item)
+    }
+    console.log(item)
+    childPanel.appendChild(item)
+  }
+  // const location = makeElement('p', 'textContent', `Location: ${data.location}`)
+  // name.appendChild(location)
+
+  // const 
+  parentPanel.appendChild(childPanel)
+
+  return parentPanel
+
+  function makeElement(type, property, propertyContent, className){
+    const curItem = document.createElement(type)
+    if (className!=undefined){
+      curItem.className = className
+    }
+    curItem[property] = propertyContent
+
+    return curItem
+  }
+
+}
 
 /*
   List of LS Instructors Github username's:
